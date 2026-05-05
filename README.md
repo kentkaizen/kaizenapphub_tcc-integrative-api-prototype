@@ -1,108 +1,51 @@
-# 🐝 RepoHive Prototype  
-**OTP • Mailbox • AI Chatbot (Frontend Template)**
+# RepoHive Laravel UI Prototype
 
----
+RepoHive is a Laravel migration of the original static HTML prototype for the TCC integrative API project. This phase focuses on UI/UX structure only, so backend authentication, OTP delivery, email delivery, and AI responses are simulated in the browser.
 
-## 📌 Overview  
-RepoHive is a **frontend prototype system** that demonstrates:
+## Included Modules
 
-- 🔐 OTP Authentication (Phone & Email)
-- 📬 Mailbox System (Inbox, Compose, Sent History)
-- 🤖 AI Chatbot Interface (Animated Chat UI)
-- 🌐 Google OAuth (Prototype Simulation)
+- Authentication screens: login, registration, and simulated Google sign-in
+- OTP flow: phone OTP, email OTP, and verification screen using prototype code `123456`
+- Mailbox: inbox, sent history, archived messages, search, and compose modal
+- AI chatbot: animated chat interface with prototype responses
 
-This project is designed as a **base template** to be converted into a full **Laravel application**.
+## Laravel Routes
 
----
+- `/` - app hub
+- `/login` - authentication login
+- `/register` - account registration
+- `/otp/phone` - phone OTP request
+- `/otp/email` - email OTP request
+- `/otp/verify` - OTP validation
+- `/mailbox` - mailbox dashboard
+- `/ai-chatbot` - AI assistant
 
-## 🧩 Features  
+Legacy static paths such as `/index.html`, `/mailbox.html`, and `/ai-chatbot.html` redirect to the new Laravel routes.
 
-### 🔐 Authentication
-- Send OTP via Phone  
-- Send OTP via Email  
-- Validate OTP (Prototype: `123456`)  
-- Google Login (Simulated)  
+## Project Structure
 
----
+```text
+app/                    Laravel application classes
+public/assets/          Migrated prototype CSS, JavaScript, and image assets
+resources/views/        Blade layouts, pages, and partials
+routes/web.php          UI route definitions and legacy redirects
+tests/Feature/          Route smoke tests for the UI prototype
+```
 
-### 📬 Mailbox System
-- Inbox (sample emails)  
-- Compose Email  
-- Sent History (stored in `localStorage`)  
-- Search emails  
+## Local Setup
 
----
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan serve
+```
 
-### 🤖 AI Chatbot
-- Animated chat interface  
-- Typing indicator  
-- Auto-reply logic (prototype AI)  
+Open the local URL shown by `php artisan serve`.
 
----
+## Prototype Notes
 
-## 📁 Project Structure
-
-repohive-otp-mailbox/
-│
-├── index.html              
-├── otp-phone.html          
-├── otp-email.html          
-├── validate-otp.html       
-├── mailbox.html            
-├── ai-chatbot.html         
-│
-├── styles.css              
-└── app.js                  
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-
-git clone <your-repo-link>
-cd repohive-otp-mailbox
-
-### 2. Open in Browser
-
-open index.html
-
-or double-click index.html
-
----
-
-## 🔑 Prototype Credentials
-
-OTP Code: 123456  
-Google Login: Simulated
-
----
-
-## ⚙️ Tech Stack
-
-- HTML5  
-- CSS3  
-- Vanilla JavaScript  
-- LocalStorage  
-
----
-
-## 🎯 Purpose
-
-This project is intended to:
-
-- Serve as a UI/UX template  
-- Demonstrate system flow  
-- Be converted into a Laravel project  
-
----
-
-## 🏁 License
-
-Educational use only
-
----
-
-## 💡 Tagline
-
-Build Together. Ship Faster.
+- OTP code is always `123456`.
+- Prototype auth state is saved in `localStorage`.
+- Sent mailbox messages are saved in `localStorage`.
+- The chatbot uses local JavaScript replies and is ready for backend AI integration in the next phase.
