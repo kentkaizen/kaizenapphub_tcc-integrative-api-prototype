@@ -1,8 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "tcc/repohive-laravel-prototype",
+    "name": "tcc/kaizen-app-hub-laravel-prototype",
     "type": "project",
-    "description": "Laravel UI prototype for RepoHive authentication, OTP, mailbox, and AI chatbot flows.",
+    "description": "Laravel UI prototype for Kaizen App Hub authentication, OTP, mailbox, and AI chatbot flows.",
     "keywords": ["laravel", "prototype", "ui", "otp", "mailbox", "chatbot"],
     "license": "MIT",
     "require": {

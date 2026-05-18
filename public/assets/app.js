@@ -2,8 +2,8 @@ const prototypeOtp = "123456";
 
 const inboxEmails = [
   {
-    title: "Welcome to RepoHive Mail",
-    from: "RepoHive Team",
+    title: "Welcome to Kaizen App Hub Mail",
+    from: "Kaizen App Hub Team",
     body: "Your secure mailbox is ready. You can receive workspace updates, system notifications, and team messages.",
   },
   {
@@ -14,14 +14,14 @@ const inboxEmails = [
   {
     title: "Project Workspace Invitation",
     from: "Douglas Hill",
-    body: "You have been added to a RepoHive workspace. Open your dashboard to view tasks, repositories, and updates.",
+    body: "You have been added to a Kaizen App Hub workspace. Open your dashboard to view tasks, repositories, and updates.",
   },
 ];
 
 const archivedEmails = [
   {
     title: "Repository Access Updated",
-    from: "RepoHive Admin",
+    from: "Kaizen App Hub Admin",
     body: "Your access to the API prototype repository was updated for the current UI/UX phase.",
   },
   {
@@ -145,7 +145,13 @@ function sendEmailOtp() {
 }
 
 function setupOtpScreen() {
-  setText("otpTarget", localStorage.getItem("otp_target") || "your account");
+  const target = document.getElementById("otpTarget");
+
+  if (!target) {
+    return;
+  }
+
+  target.textContent = target.dataset.serverTarget || localStorage.getItem("otp_target") || "your account";
 }
 
 function setupOtpInputs() {
@@ -218,7 +224,12 @@ function saveSentEmails() {
 }
 
 function loadMailbox() {
-  const verifiedUser = localStorage.getItem("verified_user") || "Verified User";
+  const userEmail = document.getElementById("userEmail");
+  const serverUser = userEmail ? userEmail.textContent.trim() : "";
+  const verifiedUser = serverUser && serverUser !== "Verified User"
+    ? serverUser
+    : localStorage.getItem("verified_user") || "Verified User";
+
   setText("userEmail", verifiedUser);
   updateSentCount();
   showInbox();
@@ -507,7 +518,7 @@ function generateBotReply(message) {
   const text = message.toLowerCase();
 
   if (text.includes("email") || text.includes("summarize") || text.includes("mailbox")) {
-    return "Your mailbox shows recent updates about OTP verification, workspace invitations, and RepoHive activity notices.";
+    return "Your mailbox shows recent updates about OTP verification, workspace invitations, and Kaizen App Hub activity notices.";
   }
 
   if (text.includes("sent")) {
@@ -526,5 +537,5 @@ function generateBotReply(message) {
     return "The current authentication screens are UI prototypes. They store a temporary session in localStorage for flow testing.";
   }
 
-  return "I can help with RepoHive mailbox summaries, email drafting, OTP verification, and navigation through this Laravel UI prototype.";
+  return "I can help with Kaizen App Hub mailbox summaries, email drafting, OTP verification, and navigation through this Laravel UI prototype.";
 }

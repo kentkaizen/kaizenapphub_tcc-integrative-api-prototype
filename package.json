@@ -1,6 +1,6 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
-    "name": "repohive-laravel-prototype",
+    "name": "kaizen-app-hub-laravel-prototype",
     "private": true,
     "type": "module",
     "scripts": {

@@ -1,16 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'RepoHive Mailbox')
+@section('title', 'Kaizen App Hub Mailbox')
+@section('bodyClass', 'dashboard-surface')
 
 @section('content')
-<div class="mailbox">
+<div class="mailbox app-shell dashboard-view">
     @include('partials.mail-sidebar')
 
-    <main class="main">
+    <main class="main workspace">
         <header class="topbar">
             <div>
+                <p class="welcome-text">Kaizen App Hub Mailbox</p>
+                <span class="status-dot">Verified</span>
                 <h2 id="mailTitle">Inbox</h2>
-                <small id="userEmail">Verified User</small>
+                <small id="userEmail">{{ auth()->user()->email }}</small>
             </div>
             <div class="topbar-actions">
                 <input id="searchMail" placeholder="Search mail..." onkeyup="filterMail()">
@@ -32,7 +35,7 @@
 </div>
 
 <div id="composeModal" class="modal" aria-hidden="true">
-    <div class="modal-card">
+    <div class="modal-card glass-card">
         <button class="close" type="button" onclick="closeCompose()" aria-label="Close compose modal">x</button>
         <h2>Compose Email</h2>
 

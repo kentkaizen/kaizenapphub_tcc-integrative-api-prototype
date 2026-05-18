@@ -2,17 +2,20 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_the_application_returns_a_successful_response(): void
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('Welcome to RepoHive');
+        $response->assertSee('Welcome to Kaizen App Hub');
     }
 
     public function test_prototype_routes_render_successfully(): void
@@ -23,8 +26,6 @@ class ExampleTest extends TestCase
             '/otp/phone' => 'Send OTP to Phone',
             '/otp/email' => 'Send OTP to Email',
             '/otp/verify' => 'Validate OTP',
-            '/mailbox' => 'RepoHive',
-            '/ai-chatbot' => 'RepoHive AI Assistant',
         ];
 
         foreach ($routes as $uri => $text) {
@@ -32,6 +33,67 @@ class ExampleTest extends TestCase
                 ->assertStatus(200)
                 ->assertSee($text);
         }
+
+        $user = User::factory()->create();
+
+        $protectedRoutes = [
+            '/mailbox' => 'Kaizen App Hub',
+            '/ai-chatbot' => 'Kaizen AI Assistant',
+        ];
+
+        foreach ($protectedRoutes as $uri => $text) {
+            $this->actingAs($user)
+                ->get($uri)
+                ->assertStatus(200)
+                ->assertSee($text);
+        }
+    }
+
+    public function test_dashboard_routes_require_authentication(): void
+    {
+        $this->get('/mailbox')->assertRedirect('/login');
+        $this->get('/ai-chatbot')->assertRedirect('/login');
+        $this->get('/dashboard')->assertRedirect('/login');
+    }
+
+    public function test_user_can_login_with_database_credentials(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'student@example.com',
+        ]);
+
+        $this->post('/login', [
+            'email' => 'student@example.com',
+            'password' => 'password',
+        ])->assertRedirect(route('mailbox'));
+
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_user_can_register_and_start_a_session(): void
+    {
+        $this->post('/register', [
+            'name' => 'Student User',
+            'email' => 'student@example.com',
+            'password' => 'password',
+        ])->assertRedirect(route('mailbox'));
+
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', [
+            'name' => 'Student User',
+            'email' => 'student@example.com',
+        ]);
+    }
+
+    public function test_user_can_logout(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->post('/logout')
+            ->assertRedirect(route('home'));
+
+        $this->assertGuest();
     }
 
     public function test_legacy_static_html_paths_redirect_to_laravel_routes(): void

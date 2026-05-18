@@ -1,6 +1,6 @@
-# RepoHive Laravel UI Prototype
+# Kaizen App Hub Laravel UI Prototype
 
-RepoHive is a Laravel migration of the original static HTML prototype for the TCC integrative API project. This phase focuses on UI/UX structure only, so backend authentication, OTP delivery, email delivery, and AI responses are simulated in the browser.
+Kaizen App Hub is a Laravel migration of the original static HTML prototype for the TCC integrative API project. This phase focuses on UI/UX structure only, so backend authentication, OTP delivery, email delivery, and AI responses are simulated in the browser.
 
 ## Included Modules
 

@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'RepoHive AI Chatbot')
+@section('title', 'Kaizen App Hub AI Chatbot')
 @section('bodyClass', 'chatbot-body')
 
 @section('content')
-<div class="chatbot-only-page">
-    <main class="chat-panel">
+<div class="chatbot-only-page app-shell">
+    <main class="chat-panel glass-card">
         <header class="chat-header">
-            <div class="ai-orb">AI</div>
+            <div class="ai-orb brand-mark">AI</div>
             <div>
-                <h2>RepoHive AI Assistant</h2>
-                <small>Online - Ready to help</small>
+                <h2>Kaizen AI Assistant</h2>
+                <small class="status-dot">Online - Ready to help</small>
             </div>
             <a class="btn compact light panel-link" href="{{ route('mailbox') }}">Mailbox</a>
         </header>
@@ -19,7 +19,7 @@
             <div class="chat-message bot show">
                 <div class="avatar">AI</div>
                 <div class="bubble">
-                    Hi! I am your RepoHive AI Assistant. How can I help you today?
+                    Hi! I am your Kaizen AI Assistant. How can I help you today?
                 </div>
             </div>
         </section>
