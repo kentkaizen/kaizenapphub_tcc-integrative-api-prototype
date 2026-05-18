@@ -1,51 +1,78 @@
-# Kaizen App Hub Laravel UI Prototype
+ # Kaizen App Hub
 
-Kaizen App Hub is a Laravel migration of the original static HTML prototype for the TCC integrative API project. This phase focuses on UI/UX structure only, so backend authentication, OTP delivery, email delivery, and AI responses are simulated in the browser.
+  Kaizen App Hub is a Laravel prototype for the TCC integrative API project. It converts the original static HTML UI into a Laravel application with
+  database authentication, protected pages, OTP verification, mailbox UI, and an AI chatbot prototype.
 
-## Included Modules
+  ## Features
 
-- Authentication screens: login, registration, and simulated Google sign-in
-- OTP flow: phone OTP, email OTP, and verification screen using prototype code `123456`
-- Mailbox: inbox, sent history, archived messages, search, and compose modal
-- AI chatbot: animated chat interface with prototype responses
+  - User registration, login, and logout using Laravel authentication
+  - Protected mailbox and AI chatbot pages
+  - Phone OTP request, resend, and verification
+  - Email OTP request, resend, and verification
+  - Random 6-digit OTP codes with expiry, attempt limits, and cooldowns
+  - Repohive SMS and Email API configuration
+  - Mailbox UI with inbox, sent, archive, search, and compose modal
+  - AI chatbot interface with prototype browser-side replies
+  - Legacy static HTML paths redirected to Laravel routes
+  - Feature tests for authentication, protected routes, and OTP flows.
 
-## Laravel Routes
+    ## Main Routes
 
-- `/` - app hub
-- `/login` - authentication login
-- `/register` - account registration
-- `/otp/phone` - phone OTP request
-- `/otp/email` - email OTP request
-- `/otp/verify` - OTP validation
-- `/mailbox` - mailbox dashboard
-- `/ai-chatbot` - AI assistant
+  - `/` - home page
+  - `/login` - login form
+  - `/register` - registration form
+  - `/otp/phone` - phone OTP request
+  - `/otp/verify` - phone OTP verification
+  - `/otp/email` - email OTP request
+  - `/otp/email/verify` - email OTP verification
+  - `/mailbox` - protected mailbox dashboard
+  - `/ai-chatbot` - protected AI chatbot page
 
-Legacy static paths such as `/index.html`, `/mailbox.html`, and `/ai-chatbot.html` redirect to the new Laravel routes.
 
-## Project Structure
+  ## Local Setup
 
-```text
-app/                    Laravel application classes
-public/assets/          Migrated prototype CSS, JavaScript, and image assets
-resources/views/        Blade layouts, pages, and partials
-routes/web.php          UI route definitions and legacy redirects
-tests/Feature/          Route smoke tests for the UI prototype
-```
+  ```bash
+  composer install
+  npm install
+  cp .env.example .env
+  php artisan key:generate
 
-## Local Setup
+  Create a MySQL database named: laravel
 
-```bash
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan serve
-```
+  Then run:
 
-Open the local URL shown by `php artisan serve`.
+  php artisan migrate --seed
+  npm run build
+  php artisan serve
 
-## Prototype Notes
+  Open the local URL shown by php artisan serve.
 
-- OTP code is always `123456`.
-- Prototype auth state is saved in `localStorage`.
-- Sent mailbox messages are saved in `localStorage`.
-- The chatbot uses local JavaScript replies and is ready for backend AI integration in the next phase.
+  ## Demo Account
+
+  Email: test@example.com
+  Password: password
+
+  ## Environment Notes
+
+  The project uses MySQL by default:
+
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=laravel
+  DB_USERNAME=root
+  DB_PASSWORD=
+
+  OTP delivery uses Repohive API tokens:
+
+  REPOHIVE_SMS_API_TOKEN=
+  REPOHIVE_EMAIL_API_TOKEN=
+
+  ## Testing
+
+  php artisan test
+
+  ## Project Notes
+
+  The authentication and OTP flows are handled by Laravel. The mailbox and chatbot screens are still prototype UI modules, with the chatbot currently using
+  browser-side sample responses.
