@@ -75,6 +75,7 @@ class ExampleTest extends TestCase
         $this->post('/register', [
             'name' => 'Student User',
             'email' => 'student@example.com',
+            'phone' => '+63 900 000 0000',
             'password' => 'password',
         ])->assertRedirect(route('mailbox'));
 
@@ -82,6 +83,7 @@ class ExampleTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'Student User',
             'email' => 'student@example.com',
+            'phone' => '+639000000000',
         ]);
     }
 

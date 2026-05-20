@@ -17,10 +17,26 @@
             </div>
             <div class="topbar-actions">
                 <input id="searchMail" placeholder="Search mail..." onkeyup="filterMail()">
+                <form method="POST" action="{{ route('sms.reminder') }}">
+                    @csrf
+                    <button class="btn compact light" type="submit">Send Reminder SMS</button>
+                </form>
                 <button class="btn compact primary" type="button" onclick="openCompose()">Compose</button>
                 <a class="btn compact light" href="{{ route('ai-chatbot') }}">AI Chatbot</a>
             </div>
         </header>
+
+        @if (session('success'))
+            <div class="success" role="status">{{ session('success') }}</div>
+        @endif
+
+        @if (session('warning'))
+            <div class="auth-alert" role="alert">{{ session('warning') }}</div>
+        @endif
+
+        @if ($errors->has('phone'))
+            <div class="auth-alert" role="alert">{{ $errors->first('phone') }}</div>
+        @endif
 
         <section class="mail-area">
             <div id="mailList" class="mail-list"></div>

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\SmsOtp;
+use App\Services\RepohiveSms;
+use App\Support\PhoneNumber;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use RuntimeException;
-use Throwable;
 
 class SmsOtpController extends Controller
 {
@@ -20,6 +19,10 @@ class SmsOtpController extends Controller
     private const MAX_ATTEMPTS = 5;
 
     private const RESEND_COOLDOWN_SECONDS = 60;
+
+    public function __construct(private readonly RepohiveSms $sms)
+    {
+    }
 
     public function create(): View
     {
@@ -147,15 +150,10 @@ class SmsOtpController extends Controller
     private function validatedPhone(Request $request): string
     {
         $validated = $request->validate([
-            'phone' => ['required', 'string', 'max:30', 'regex:/^\+?[0-9][0-9\s().-]{6,29}$/'],
+            'phone' => PhoneNumber::rules(),
         ]);
 
-        return $this->normalizePhone($validated['phone']);
-    }
-
-    private function normalizePhone(string $phone): string
-    {
-        return preg_replace('/(?!^\+)[^\d]/', '', trim($phone));
+        return PhoneNumber::normalize($validated['phone']);
     }
 
     private function latestOtpFor(string $phone): ?SmsOtp
@@ -194,38 +192,11 @@ class SmsOtpController extends Controller
 
     private function sendSms(SmsOtp $otp): void
     {
-        $token = config('services.repohive_sms.token');
-        $baseUrl = config('services.repohive_sms.base_url');
-
-        if (! $token || ! $baseUrl) {
-            throw ValidationException::withMessages([
-                'phone' => 'Repohive SMS is not configured.',
-            ]);
-        }
-
-        try {
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->asJson()
-                ->timeout(30)
-                ->post(rtrim($baseUrl, '/').'/messages', [
-                    'phone' => $otp->phone,
-                    'message' => "Your Kaizen App Hub verification code is {$otp->code}. Do not share it.",
-                ]);
-        } catch (Throwable $exception) {
-            report($exception);
-
-            throw ValidationException::withMessages([
-                'phone' => 'Failed to send OTP. Please try again.',
-            ]);
-        }
-
-        if ($response->failed()) {
-            report(new RuntimeException('Repohive SMS failed with status '.$response->status()));
-
-            throw ValidationException::withMessages([
-                'phone' => 'Failed to send OTP. Please try again.',
-            ]);
-        }
+        $this->sms->send(
+            $otp->phone,
+            "Your Kaizen App Hub verification code is {$otp->code}. Do not share it.",
+            'phone',
+            'Failed to send OTP. Please try again.'
+        );
     }
 }

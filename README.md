@@ -1,4 +1,4 @@
- # Kaizen App Hub
+  # Kaizen App Hub
 
   Kaizen App Hub is a Laravel prototype for the TCC integrative API project. It converts the original static HTML UI into a Laravel application with
   database authentication, protected pages, OTP verification, mailbox UI, and an AI chatbot prototype.
@@ -14,9 +14,9 @@
   - Mailbox UI with inbox, sent, archive, search, and compose modal
   - AI chatbot interface with prototype browser-side replies
   - Legacy static HTML paths redirected to Laravel routes
-  - Feature tests for authentication, protected routes, and OTP flows.
+  - Feature tests for authentication, protected routes, and OTP flows
 
-    ## Main Routes
+  ## Main Routes
 
   - `/` - home page
   - `/login` - login form
@@ -28,7 +28,6 @@
   - `/mailbox` - protected mailbox dashboard
   - `/ai-chatbot` - protected AI chatbot page
 
-
   ## Local Setup
 
   ```bash
@@ -37,7 +36,9 @@
   cp .env.example .env
   php artisan key:generate
 
-  Create a MySQL database named: laravel
+  Create a MySQL database named:
+
+  kaizen_app_hub
 
   Then run:
 
@@ -59,7 +60,7 @@
   DB_CONNECTION=mysql
   DB_HOST=127.0.0.1
   DB_PORT=3306
-  DB_DATABASE=laravel
+  DB_DATABASE=kaizen_app_hub
   DB_USERNAME=root
   DB_PASSWORD=
 

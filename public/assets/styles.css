@@ -604,6 +604,10 @@ textarea:focus {
   gap: 12px;
 }
 
+.topbar-actions form {
+  margin: 0;
+}
+
 .topbar input {
   width: 320px;
   max-width: 100%;
@@ -935,6 +939,7 @@ textarea:focus {
   }
 
   .topbar input,
+  .topbar-actions form,
   .topbar-actions .btn {
     width: 100%;
   }

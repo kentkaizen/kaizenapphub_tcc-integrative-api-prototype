@@ -37,6 +37,9 @@
                 <label for="registerEmail">Email Address</label>
                 <input id="registerEmail" name="email" type="email" value="{{ old('email') }}" placeholder="student@example.com" autocomplete="email" required>
 
+                <label for="registerPhone">Phone Number</label>
+                <input id="registerPhone" name="phone" type="tel" value="{{ old('phone') }}" placeholder="+63 900 000 0000" autocomplete="tel" required>
+
                 <label for="registerPassword">Password</label>
                 <input id="registerPassword" name="password" type="password" placeholder="Create password" autocomplete="new-password" required>
 

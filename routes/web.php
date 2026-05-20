@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\EmailOtpController;
+use App\Http\Controllers\SmsNotificationController;
 use App\Http\Controllers\SmsOtpController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::post('/otp/resend', [SmsOtpController::class, 'resend'])->name('otp.resen
 Route::middleware('auth')->group(function (): void {
     Route::redirect('/dashboard', '/mailbox')->name('dashboard');
     Route::view('/mailbox', 'mailbox')->name('mailbox');
+    Route::post('/sms/reminder', [SmsNotificationController::class, 'sendReminder'])->name('sms.reminder');
     Route::view('/ai-chatbot', 'ai-chatbot')->name('ai-chatbot');
 });
 
